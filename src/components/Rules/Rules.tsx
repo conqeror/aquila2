@@ -131,5 +131,25 @@ export const Rules: React.FC = () => (
       Z veľmi dobrých dôvodov je možné dohodnúť sa na výnimkách z niektorých
       pravidiel (napríklad ak máte v tíme vozíčkara).
     </p>
+    <h1>FAQ</h1>
+    <h4>Môže sa náš tím zúčastniť Aquily kdekoľvek?</h4>
+    <p>
+      Teoreticky áno. Primárne sa zameriavame na tímy na Slovensku a v Česku,
+      ale nebránime sa ani tímom vo vzdialenejšom zahraničí. Ale rátajte prosím
+      s tým, že na odohranie hry budete potrebovať obálku so šiframi a zaslanie
+      do zahraničia môže trvať dlho.
+    </p>
+    <h4>Môže jeden tím lúštiť na rôznych miestach?</h4>
+    <p>
+      Prakticky nie. Jeden tím dostane len jednu predurčenú trasu. Chceli sme
+      zachovať pocit z prezenčného lúštenia šifier v tíme. Niektorí členovia
+      môžu čiastkovo lúštiť z domu, ale niektoré šifry nebudú lúštiteľné online.
+    </p>
+    <h4>Ako je to s účastníckym poplatkom?</h4>
+    <p>
+      Zatiaľ nevieme. Budeme radi, ak nám pomôžete pokryť výdavky, najmä
+      poštovné. Ale oveľa radšej budeme, ak sa rozhodnete peniaze venovať na
+      dobrý účel.
+    </p>
   </Container>
 );
