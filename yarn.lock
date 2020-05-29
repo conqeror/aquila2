@@ -1325,6 +1325,24 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@react-hook/debounce@^2.0.3":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@react-hook/debounce/-/debounce-2.0.5.tgz#515d9b9311c20278c22a010c9c8042703139d14d"
+  integrity sha512-WrwQ1e4vx5lxxxEpGPPliMcs6oUJ8cyEb/GL8OEUPhBW4WL8YRSDW5oPnsOqIPqhHDyQMHgMipXWgj7QVmRMKA==
+
+"@react-hook/throttle@^2.1.2":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@react-hook/throttle/-/throttle-2.1.4.tgz#72e715f696e9a13fe2de8c762ba9e8c512716db6"
+  integrity sha512-ePn7Agti1hVUHYjONrK2thTfCMXmuzkZaJN6dBMrYb3zPbT83CaLB4gHJSAoWcffimgPyLhR/xLomvZrXCRedA==
+
+"@react-hook/window-size@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-2.0.5.tgz#d9a37991589d4ce1276e33867b54bf6e1e6d147f"
+  integrity sha512-IyLAsYm/OpF5Syq5A3fMPVcFDY9ar7QqCUtaTk3h6dI/RqOFjVDShhKxA4Yl71mX9Y6z6Yw4QTPewIBhkGKRfQ==
+  dependencies:
+    "@react-hook/debounce" "^2.0.3"
+    "@react-hook/throttle" "^2.1.2"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
