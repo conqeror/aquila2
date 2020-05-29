@@ -7,10 +7,8 @@ import {
   Grid,
   Button,
   makeStyles,
-  Card,
 } from "@material-ui/core";
 import { Event, LocationOn, Group } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   icon: {

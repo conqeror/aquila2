@@ -13,7 +13,7 @@ const App: React.FC = () => (
   <Router>
     <Route
       path="/"
-      render={({ location }) => (
+      render={({ location }): React.ReactElement => (
         <>
           <AppBar position="sticky">
             <Tabs value={location.pathname}>
