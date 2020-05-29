@@ -7,11 +7,13 @@ import { Teams } from "./components/Teams/Teams";
 
 const allTabs = ["/", "/rules", "/teams"];
 
+const REGISTRATION_ENABLED = false;
+
 const App: React.FC = () => (
   <Router>
     <Route
       path="/"
-      render={({ location }) => (
+      render={({ location }): React.ReactElement => (
         <>
           <AppBar position="sticky">
             <Tabs value={location.pathname}>
@@ -22,12 +24,14 @@ const App: React.FC = () => (
                 component={Link}
                 to={allTabs[1]}
               />
-              <Tab
-                label="Prihlasené tímy"
-                value="/teams"
-                component={Link}
-                to={allTabs[2]}
-              />
+              {REGISTRATION_ENABLED && (
+                <Tab
+                  label="Prihlasené tímy"
+                  value="/teams"
+                  component={Link}
+                  to={allTabs[2]}
+                />
+              )}
             </Tabs>
           </AppBar>
           <Switch>
