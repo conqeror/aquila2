@@ -48,10 +48,8 @@ export const Home: React.FC = () => {
   return (
     <>
       <Container>
-        <Box pt={10}>
-          <Typography variant="h1" align="center">
-            Šifrovačka Aquila
-          </Typography>
+        <Box pt={10} display="flex" flexDirection="column" alignItems="center">
+          <img src={require("./aquila-black.png")} height={200} />
         </Box>
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
@@ -83,7 +81,7 @@ export const Home: React.FC = () => {
                 <LocationOn style={{ fontSize: 50 }} />
                 <Typography variant="h4">Kdekoľvek</Typography>
                 <Typography variant="h6" align="center">
-                  ale nebude to v pohodlí domova
+                  (ale nebude to v pohodlí domova)
                 </Typography>
               </Box>
             </Grid>
