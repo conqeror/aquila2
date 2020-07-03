@@ -1,0 +1,9 @@
+query getPublicTeams {
+  teams_public {
+    id
+    name
+    members {
+      name
+    }
+  }
+}
