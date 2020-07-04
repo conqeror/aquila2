@@ -4,21 +4,22 @@ import {
   TextField,
   Button,
   Container,
-  Typography,
   Box,
-  Grid,
+  Typography,
   FormGroup,
+  Grid,
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import useFetch from "use-http";
-import { useRegisterMutation } from "../../generated/graphql";
+import {
+  useGetMyTeamQuery,
+  useUpdateTeamMutation,
+} from "../../generated/graphql";
 import { writeStorage } from "@rehooks/local-storage";
 import { useHistory } from "react-router-dom";
+import { client } from "../../apolloClient";
 
 type FormData = {
-  teamName: string;
   email: string;
-  password: string;
   member1: string;
   member2: string;
   member3: string;
@@ -34,40 +35,51 @@ const useStyles = makeStyles((theme) => ({
   formGroup: {
     alignItems: "center",
   },
+  button: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
-export const Register: React.FC = () => {
+export const MyTeam: React.FC = () => {
   const classes = useStyles();
   const { register, getValues } = useForm<FormData>();
-  const { post } = useFetch(
-    "https://cors-anywhere.herokuapp.com/https://aquila-auth.herokuapp.com/signup"
-  );
-  const [registerTeam] = useRegisterMutation();
+
+  const { data, loading, error } = useGetMyTeamQuery();
+  const [updateTeam, { loading: loadingTeam }] = useUpdateTeamMutation();
+
   const history = useHistory();
+
+  if (!data || loading || error) {
+    return <div />;
+  }
+
+  const team = data.my_team[0];
 
   const onSubmit = async (): Promise<void> => {
     const data = getValues();
-    const authResponse = await post({
-      username: data.teamName,
-      password: data.password,
-      confirmPassword: data.password,
-    });
-    writeStorage("authToken", authResponse.token);
-
-    await registerTeam({
-      variables: {
-        data: {
-          id: String(authResponse.id),
-          name: data.teamName,
-          email: data.email,
-          member1: data.member1,
-          member2: data.member2,
-          member3: data.member3,
-          member4: data.member4,
-          location: data.location,
+    if (!team.id || loadingTeam) return;
+    await Promise.all([
+      updateTeam({
+        variables: {
+          id: team.id,
+          data: {
+            email: data.email,
+            location: data.location,
+            member1: data.member1,
+            member2: data.member2,
+            member3: data.member3,
+            member4: data.member4,
+          },
         },
-      },
-    });
+      }),
+    ]);
+    client.reFetchObservableQueries();
+    history.replace("/teams");
+  };
+
+  const handleLogout = (): void => {
+    writeStorage("authToken", "");
+    client.clearStore();
     history.replace("/");
   };
 
@@ -75,30 +87,21 @@ export const Register: React.FC = () => {
     <Container>
       <Box pt={5}>
         <Typography variant="h2" gutterBottom align="center">
-          Registrácia
+          Môj tím
+        </Typography>
+        <Typography variant="h4" gutterBottom align="center">
+          {team.name}
         </Typography>
         <Grid item xs={12}>
           <FormGroup className={classes.formGroup}>
-            <div>
-              <TextField
-                inputRef={register}
-                className={classes.textField}
-                id="teamName"
-                name="teamName"
-                variant="outlined"
-                label="Názov tímu"
-              />
-            </div>
-            <div>
-              <TextField
-                inputRef={register}
-                className={classes.textField}
-                type="password"
-                id="password"
-                name="password"
-                variant="outlined"
-                label="Heslo"
-              />
+            <div className={classes.button}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
             </div>
             <div>
               <TextField
@@ -108,6 +111,7 @@ export const Register: React.FC = () => {
                 name="email"
                 variant="outlined"
                 label="Kontaktný email"
+                defaultValue={team.email}
               />
             </div>
             <div>
@@ -118,6 +122,7 @@ export const Register: React.FC = () => {
                 name="member1"
                 variant="outlined"
                 label="Člen 1"
+                defaultValue={team.member1}
               />
             </div>
             <div>
@@ -128,6 +133,7 @@ export const Register: React.FC = () => {
                 name="member2"
                 variant="outlined"
                 label="Člen 2"
+                defaultValue={team.member2}
               />
             </div>
             <div>
@@ -138,6 +144,7 @@ export const Register: React.FC = () => {
                 name="member3"
                 variant="outlined"
                 label="Člen 3"
+                defaultValue={team.member3}
               />
             </div>
             <div>
@@ -148,6 +155,7 @@ export const Register: React.FC = () => {
                 name="member4"
                 variant="outlined"
                 label="Člen 4"
+                defaultValue={team.member4}
               />
             </div>
             <div>
@@ -159,11 +167,12 @@ export const Register: React.FC = () => {
                 name="location"
                 variant="outlined"
                 label="Lokalita"
+                defaultValue={team.location}
               />
             </div>
             <div>
               <Button variant="contained" color="primary" onClick={onSubmit}>
-                Registruj!
+                Zmeň údaje!
               </Button>
             </div>
           </FormGroup>

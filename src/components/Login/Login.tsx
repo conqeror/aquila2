@@ -1,8 +1,18 @@
 import React from "react";
-import { makeStyles, TextField, Button } from "@material-ui/core";
+import {
+  makeStyles,
+  TextField,
+  Button,
+  Container,
+  Box,
+  Typography,
+  FormGroup,
+  Grid,
+} from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import useFetch from "use-http";
-import { useAuthToken } from "../../state/authToken";
+import { useHistory } from "react-router-dom";
+import { writeStorage } from "@rehooks/local-storage";
 
 type FormData = {
   teamName: string;
@@ -10,55 +20,74 @@ type FormData = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: 200,
-    },
+  textField: {
+    width: 300,
+    margin: theme.spacing(1),
+  },
+  formGroup: {
+    alignItems: "center",
   },
 }));
 
 export const Login: React.FC = () => {
   const classes = useStyles();
-  const { register, handleSubmit } = useForm<FormData>();
-  const { setToken } = useAuthToken();
+  const { register, getValues } = useForm<FormData>();
   const { post } = useFetch(
     "https://cors-anywhere.herokuapp.com/https://aquila-auth.herokuapp.com/login"
   );
+  const history = useHistory();
 
-  const onSubmit = async (data: FormData): Promise<void> => {
-    const authResponse = await post({
-      username: data.teamName,
-      password: data.password,
-    });
-    setToken(authResponse.token);
+  const onSubmit = async (): Promise<void> => {
+    const data = getValues();
+    try {
+      const authResponse = await post({
+        username: data.teamName,
+        password: data.password,
+      });
+      writeStorage("authToken", authResponse.token);
+      history.replace("/");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <TextField
-          inputRef={register}
-          id="teamName"
-          name="teamName"
-          variant="outlined"
-          label="Názov tímu"
-        />
-      </div>
-      <div>
-        <TextField
-          inputRef={register}
-          id="password"
-          name="password"
-          variant="outlined"
-          label="Heslo"
-        />
-      </div>
-      <div>
-        <Button variant="contained" color="primary" type="submit">
+    <Container>
+      <Box pt={5}>
+        <Typography variant="h2" gutterBottom align="center">
           Login
-        </Button>
-      </div>
-    </form>
+        </Typography>
+        <Grid item xs={12}>
+          <FormGroup className={classes.formGroup}>
+            <div>
+              <TextField
+                inputRef={register}
+                className={classes.textField}
+                id="teamName"
+                name="teamName"
+                variant="outlined"
+                label="Názov tímu"
+              />
+            </div>
+            <div>
+              <TextField
+                inputRef={register}
+                className={classes.textField}
+                type="password"
+                id="password"
+                name="password"
+                variant="outlined"
+                label="Heslo"
+              />
+            </div>
+            <div>
+              <Button variant="contained" color="primary" onClick={onSubmit}>
+                Login
+              </Button>
+            </div>
+          </FormGroup>
+        </Grid>
+      </Box>
+    </Container>
   );
 };

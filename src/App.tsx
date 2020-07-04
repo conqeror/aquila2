@@ -1,29 +1,21 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import {
-  Tabs,
-  Tab,
-  AppBar,
-  makeStyles,
-  MenuItem,
-  IconButton,
-} from "@material-ui/core";
+import { Tabs, Tab, AppBar, MenuItem, IconButton } from "@material-ui/core";
 import { Home } from "./components/Home/Home";
 import { Rules } from "./components/Rules/Rules";
 import { Teams } from "./components/Teams/Teams";
 import { Register } from "./components/Register/Register";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 import { client } from "./apolloClient";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Login } from "./components/Login/Login";
-import { useAuthToken } from "./state/authToken";
+import { MyTeam } from "./components/MyTeam/MyTeam";
+import useLocalStorage from "@rehooks/local-storage";
 
-const allTabs = ["/", "/rules", "/teams", "/register", "/login"];
-
-const REGISTRATION_ENABLED = true;
+const allTabs = ["/", "/rules", "/teams", "/register", "/login", "/team"];
 
 const App: React.FC = () => {
-  const { token } = useAuthToken();
+  const [token] = useLocalStorage("authToken");
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -45,15 +37,13 @@ const App: React.FC = () => {
                     component={Link}
                     to={allTabs[1]}
                   />
-                  {REGISTRATION_ENABLED && (
-                    <Tab
-                      label="Prihlasené tímy"
-                      value="/teams"
-                      component={Link}
-                      to={allTabs[2]}
-                    />
-                  )}
-                  {REGISTRATION_ENABLED && (
+                  <Tab
+                    label="Prihlasené tímy"
+                    value="/teams"
+                    component={Link}
+                    to={allTabs[2]}
+                  />
+                  {!token && (
                     <Tab
                       label="Registrácia"
                       value="/register"
@@ -61,7 +51,7 @@ const App: React.FC = () => {
                       to={allTabs[3]}
                     />
                   )}
-                  {REGISTRATION_ENABLED && (
+                  {!token && (
                     <Tab
                       label="Login"
                       value="/login"
@@ -69,21 +59,23 @@ const App: React.FC = () => {
                       to={allTabs[4]}
                     />
                   )}
+                  {token && (
+                    <Tab
+                      label="Team"
+                      value="/team"
+                      component={Link}
+                      to={allTabs[5]}
+                    />
+                  )}
                 </Tabs>
-                <MenuItem>
-                  <IconButton color="inherit">
-                    <AccountCircle />
-                  </IconButton>
-                  <p>{token}</p>
-                </MenuItem>
               </AppBar>
               <Switch>
                 <Route path={allTabs[1]} render={() => <Rules />} />
                 <Route path={allTabs[2]} render={() => <Teams />} />
                 <Route path={allTabs[3]} render={() => <Register />} />
                 <Route path={allTabs[4]} render={() => <Login />} />
+                <Route path={allTabs[5]} render={() => <MyTeam />} />
                 <Route path={allTabs[0]} render={() => <Home />} />
-                <div>Logged in as</div>
               </Switch>
             </>
           )}
