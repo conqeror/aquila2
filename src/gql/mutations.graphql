@@ -1,0 +1,11 @@
+mutation register($data: teams_insert_input!) {
+  insert_teams_one(object: $data) {
+    id
+  }
+}
+
+mutation updateTeam($id: String!, $data: teams_set_input!) {
+  update_teams_by_pk(_set: $data, pk_columns: {id: $id}){
+    id
+  }
+}

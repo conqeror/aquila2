@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Event, LocationOn, Group } from "@material-ui/icons";
+import useLocalStorage from "@rehooks/local-storage";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Home: React.FC = () => {
   const classes = useStyles();
+  const [token] = useLocalStorage("authToken");
 
   return (
     <>
@@ -54,9 +56,15 @@ export const Home: React.FC = () => {
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
-              <Button variant="contained" color="primary" disabled>
-                Registrácia už čoskoro
-              </Button>
+              {!token ? (
+                <Button variant="contained" color="primary" href="/register">
+                  Registrácia
+                </Button>
+              ) : (
+                <Button variant="contained" color="primary" disabled>
+                  Už si registrovaný :)
+                </Button>
+              )}
             </Grid>
             <Grid item>
               <Button variant="outlined" color="primary" href="/rules">

@@ -1,0 +1,24 @@
+query getPublicTeams {
+  teams_public {
+    id
+    name
+    member1
+    member2
+    member3
+    member4
+  }
+}
+
+query getMyTeam {
+  my_team {
+    id
+    name
+    email
+    is_participating
+    member1
+    member2
+    member3
+    member4
+    location
+  }
+}
