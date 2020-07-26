@@ -134,6 +134,11 @@ export const Rules: React.FC = () => (
           </Typography>
         </li>
         <li>
+          <Typography>
+            Počet vylúštených šifier
+          </Typography>
+        </li>
+        <li>
           <Typography>Menší počet nápovied na vylúštených šifrách</Typography>
         </li>
         <li>
