@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const Home: React.FC = () => {
   const classes = useStyles();
-  const [token] = useLocalStorage("authToken");
 
   return (
     <>
@@ -56,15 +55,9 @@ export const Home: React.FC = () => {
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
-              {!token ? (
-                <Button variant="contained" color="primary" href="/register">
-                  Registrácia
-                </Button>
-              ) : (
-                <Button variant="contained" color="primary" disabled>
-                  Už si registrovaný :)
-                </Button>
-              )}
+              <Button variant="contained" color="primary" disabled>
+                Registrácia bola ukončená
+              </Button>
             </Grid>
             <Grid item>
               <Button variant="outlined" color="primary" href="/rules">

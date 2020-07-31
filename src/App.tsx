@@ -1,18 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Tabs, Tab, AppBar, MenuItem, IconButton } from "@material-ui/core";
+import { Tabs, Tab, AppBar } from "@material-ui/core";
 import { Home } from "./components/Home/Home";
 import { Rules } from "./components/Rules/Rules";
 import { Teams } from "./components/Teams/Teams";
 import { Register } from "./components/Register/Register";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./apolloClient";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Login } from "./components/Login/Login";
 import { MyTeam } from "./components/MyTeam/MyTeam";
 import useLocalStorage from "@rehooks/local-storage";
 
 const allTabs = ["/", "/rules", "/teams", "/register", "/login", "/team"];
+
+const REGISTRATION_ENABLED = false;
 
 const App: React.FC = () => {
   const [token] = useLocalStorage("authToken");
@@ -43,7 +44,7 @@ const App: React.FC = () => {
                     component={Link}
                     to={allTabs[2]}
                   />
-                  {!token && (
+                  {!token && REGISTRATION_ENABLED && (
                     <Tab
                       label="Registrácia"
                       value="/register"
