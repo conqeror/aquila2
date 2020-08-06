@@ -52,7 +52,9 @@ export const Register: React.FC = () => {
       password: data.password,
       confirmPassword: data.password,
     });
-    writeStorage("authToken", authResponse.token);
+    if (authResponse.token) {
+      writeStorage("authToken", authResponse.token);
+    }
 
     await registerTeam({
       variables: {

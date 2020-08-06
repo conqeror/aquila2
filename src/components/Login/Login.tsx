@@ -44,7 +44,9 @@ export const Login: React.FC = () => {
         username: data.teamName,
         password: data.password,
       });
-      writeStorage("authToken", authResponse.token);
+      if (authResponse.token) {
+        writeStorage("authToken", authResponse.token);
+      }
       history.replace("/");
     } catch (e) {
       console.error(e);
