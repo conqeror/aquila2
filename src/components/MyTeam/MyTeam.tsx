@@ -17,8 +17,11 @@ import {
 import { writeStorage } from "@rehooks/local-storage";
 import { useHistory } from "react-router-dom";
 import { client } from "../../apolloClient";
+import { useFetch } from "use-http";
 
 type FormData = {
+  password: string;
+  newPassword: string;
   email: string;
   member1: string;
   member2: string;
@@ -46,6 +49,10 @@ export const MyTeam: React.FC = () => {
 
   const { data, loading, error } = useGetMyTeamQuery();
   const [updateTeam, { loading: loadingTeam }] = useUpdateTeamMutation();
+
+  const { post } = useFetch(
+    "https://cors-anywhere.herokuapp.com/https://aquila-auth.herokuapp.com/changePassword"
+  );
 
   const history = useHistory();
 
@@ -83,6 +90,23 @@ export const MyTeam: React.FC = () => {
     history.replace("/");
   };
 
+  const handleChangePassword = async (): Promise<void> => {
+    const data = getValues();
+
+    try {
+      const response = await post({
+        username: team.name,
+        password: data.password,
+        newPassword: data.newPassword,
+      });
+      if (response.success) {
+        history.replace("/teams");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container>
       <Box pt={5}>
@@ -102,6 +126,49 @@ export const MyTeam: React.FC = () => {
               >
                 Logout
               </Button>
+            </div>
+            <div>
+              <Typography variant="h5" gutterBottom align="center">
+                Zmena hesla
+              </Typography>
+            </div>
+            <div>
+              <TextField
+                inputRef={register}
+                className={classes.textField}
+                id="password"
+                name="password"
+                variant="outlined"
+                type="password"
+                label="Aktuálne heslo"
+                defaultValue=""
+              />
+            </div>
+            <div>
+              <TextField
+                inputRef={register}
+                className={classes.textField}
+                id="newPassword"
+                name="newPassword"
+                variant="outlined"
+                type="password"
+                label="Nové heslo"
+                defaultValue=""
+              />
+            </div>
+            <div className={classes.button}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleChangePassword}
+              >
+                Zmeň heslo
+              </Button>
+            </div>
+            <div>
+              <Typography variant="h5" gutterBottom align="center">
+                Zmena údajov
+              </Typography>
             </div>
             <div>
               <TextField
