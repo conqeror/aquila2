@@ -46,8 +46,10 @@ export const Login: React.FC = () => {
       });
       if (authResponse.token) {
         writeStorage("authToken", authResponse.token);
+        history.replace("/");
+      } else {
+        alert("Zlé prihlasovanie meno / heslo");
       }
-      history.replace("/");
     } catch (e) {
       console.error(e);
     }
