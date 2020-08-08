@@ -22,3 +22,18 @@ query getMyTeam {
     location
   }
 }
+
+query getMyTeamStatus {
+  my_team {
+    status {
+      solution_text
+      next_solution_time
+      next_hint_time
+      next_cipher_coordinates
+      hint_text
+      current_cipher_number
+      current_cipher_code
+    }
+    name
+  }
+}

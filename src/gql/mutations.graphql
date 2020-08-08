@@ -9,3 +9,31 @@ mutation updateTeam($id: String!, $data: teams_set_input!) {
     id
   }
 }
+
+mutation arrive {
+  arrive {
+    error
+    status
+  }
+}
+
+mutation takeHint {
+  takeHint {
+    error
+    status
+  }
+}
+
+mutation takeSolution {
+  takeSolution {
+    error
+    status
+  }
+}
+
+mutation trySolve($solution: String!) {
+  trySolve(solution: $solution) {
+    error
+    status
+  }
+}

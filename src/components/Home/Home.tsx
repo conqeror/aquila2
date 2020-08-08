@@ -9,7 +9,6 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Event, LocationOn, Group } from "@material-ui/icons";
-import useLocalStorage from "@rehooks/local-storage";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
