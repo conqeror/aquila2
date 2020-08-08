@@ -115,11 +115,13 @@ export const Game: React.FC = () => {
 
   const onTakeHint = async (): Promise<void> => {
     await takeHint();
+    setHintModalOpen(false);
     client.reFetchObservableQueries();
   };
 
   const onTakeSolution = async (): Promise<void> => {
     await takeSolution();
+    setSolutionModalOpen(false);
     client.reFetchObservableQueries();
   };
 
