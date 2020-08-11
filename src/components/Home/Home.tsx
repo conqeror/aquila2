@@ -52,7 +52,7 @@ export const Home: React.FC = () => {
           <img src={require("./aquila-black.png")} height={200} />
         </Box>
         <div className={classes.heroButtons}>
-          <Grid container spacing={2} justify="center">
+          <Grid container spacing={2} justifyContent="center">
             <Grid item>
               <Button variant="contained" color="primary" disabled>
                 Registrácia bola ukončená

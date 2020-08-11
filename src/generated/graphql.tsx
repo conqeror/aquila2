@@ -46,8 +46,8 @@ export type Int_Comparison_Exp = {
 
 export type Output = {
   __typename?: 'Output';
-  error?: Maybe<Scalars['Boolean']>;
-  status?: Maybe<Scalars['Boolean']>;
+  error?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
 };
 
 /** expression to compare columns of type String. All fields are combined with logical 'AND'. */
@@ -83,6 +83,7 @@ export type Ciphers = {
   teams_statuses: Array<Teams_Status>;
   /** An aggregated array relationship */
   teams_statuses_aggregate: Teams_Status_Aggregate;
+  url?: Maybe<Scalars['String']>;
 };
 
 
@@ -184,6 +185,7 @@ export type Ciphers_Bool_Exp = {
   solution_text?: Maybe<String_Comparison_Exp>;
   solution_time?: Maybe<Int_Comparison_Exp>;
   teams_statuses?: Maybe<Teams_Status_Bool_Exp>;
+  url?: Maybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "ciphers" */
@@ -209,6 +211,7 @@ export type Ciphers_Insert_Input = {
   solution_text?: Maybe<Scalars['String']>;
   solution_time?: Maybe<Scalars['Int']>;
   teams_statuses?: Maybe<Teams_Status_Arr_Rel_Insert_Input>;
+  url?: Maybe<Scalars['String']>;
 };
 
 /** aggregate max on columns */
@@ -221,6 +224,7 @@ export type Ciphers_Max_Fields = {
   solution?: Maybe<Scalars['String']>;
   solution_text?: Maybe<Scalars['String']>;
   solution_time?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 /** order by max() on columns of table "ciphers" */
@@ -232,6 +236,7 @@ export type Ciphers_Max_Order_By = {
   solution?: Maybe<Order_By>;
   solution_text?: Maybe<Order_By>;
   solution_time?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -244,6 +249,7 @@ export type Ciphers_Min_Fields = {
   solution?: Maybe<Scalars['String']>;
   solution_text?: Maybe<Scalars['String']>;
   solution_time?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 /** order by min() on columns of table "ciphers" */
@@ -255,6 +261,7 @@ export type Ciphers_Min_Order_By = {
   solution?: Maybe<Order_By>;
   solution_text?: Maybe<Order_By>;
   solution_time?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "ciphers" */
@@ -289,6 +296,7 @@ export type Ciphers_Order_By = {
   solution_text?: Maybe<Order_By>;
   solution_time?: Maybe<Order_By>;
   teams_statuses_aggregate?: Maybe<Teams_Status_Aggregate_Order_By>;
+  url?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "ciphers" */
@@ -311,7 +319,9 @@ export enum Ciphers_Select_Column {
   /** column name */
   SolutionText = 'solution_text',
   /** column name */
-  SolutionTime = 'solution_time'
+  SolutionTime = 'solution_time',
+  /** column name */
+  Url = 'url'
 }
 
 /** input type for updating data in table "ciphers" */
@@ -323,6 +333,7 @@ export type Ciphers_Set_Input = {
   solution?: Maybe<Scalars['String']>;
   solution_text?: Maybe<Scalars['String']>;
   solution_time?: Maybe<Scalars['Int']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 /** aggregate stddev on columns */
@@ -400,7 +411,9 @@ export enum Ciphers_Update_Column {
   /** column name */
   SolutionText = 'solution_text',
   /** column name */
-  SolutionTime = 'solution_time'
+  SolutionTime = 'solution_time',
+  /** column name */
+  Url = 'url'
 }
 
 /** aggregate var_pop on columns */
@@ -614,7 +627,7 @@ export type Mutation_RootDelete_SubmitsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Submits_By_PkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars['Int'];
 };
 
 
@@ -797,6 +810,7 @@ export type Mutation_RootUpdate_Routes_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_SubmitsArgs = {
+  _inc?: Maybe<Submits_Inc_Input>;
   _set?: Maybe<Submits_Set_Input>;
   where: Submits_Bool_Exp;
 };
@@ -804,6 +818,7 @@ export type Mutation_RootUpdate_SubmitsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Submits_By_PkArgs = {
+  _inc?: Maybe<Submits_Inc_Input>;
   _set?: Maybe<Submits_Set_Input>;
   pk_columns: Submits_Pk_Columns_Input;
 };
@@ -1193,7 +1208,7 @@ export type Query_RootSubmits_AggregateArgs = {
 
 /** query root */
 export type Query_RootSubmits_By_PkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars['Int'];
 };
 
 
@@ -1273,7 +1288,7 @@ export type Routes = {
   __typename?: 'routes';
   id: Scalars['uuid'];
   places: Scalars['jsonb'];
-  route_name: Scalars['String'];
+  route_name?: Maybe<Scalars['String']>;
   /** An array relationship */
   teams: Array<Teams>;
   /** An aggregated array relationship */
@@ -1485,7 +1500,9 @@ export enum Routes_Update_Column {
 export type Submits = {
   __typename?: 'submits';
   action: Scalars['String'];
-  id: Scalars['uuid'];
+  cipher_number: Scalars['Int'];
+  id: Scalars['Int'];
+  payload?: Maybe<Scalars['String']>;
   /** An object relationship */
   team: Teams;
   team_id: Scalars['String'];
@@ -1502,9 +1519,17 @@ export type Submits_Aggregate = {
 /** aggregate fields of "submits" */
 export type Submits_Aggregate_Fields = {
   __typename?: 'submits_aggregate_fields';
+  avg?: Maybe<Submits_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Submits_Max_Fields>;
   min?: Maybe<Submits_Min_Fields>;
+  stddev?: Maybe<Submits_Stddev_Fields>;
+  stddev_pop?: Maybe<Submits_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Submits_Stddev_Samp_Fields>;
+  sum?: Maybe<Submits_Sum_Fields>;
+  var_pop?: Maybe<Submits_Var_Pop_Fields>;
+  var_samp?: Maybe<Submits_Var_Samp_Fields>;
+  variance?: Maybe<Submits_Variance_Fields>;
 };
 
 
@@ -1516,9 +1541,17 @@ export type Submits_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "submits" */
 export type Submits_Aggregate_Order_By = {
+  avg?: Maybe<Submits_Avg_Order_By>;
   count?: Maybe<Order_By>;
   max?: Maybe<Submits_Max_Order_By>;
   min?: Maybe<Submits_Min_Order_By>;
+  stddev?: Maybe<Submits_Stddev_Order_By>;
+  stddev_pop?: Maybe<Submits_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Submits_Stddev_Samp_Order_By>;
+  sum?: Maybe<Submits_Sum_Order_By>;
+  var_pop?: Maybe<Submits_Var_Pop_Order_By>;
+  var_samp?: Maybe<Submits_Var_Samp_Order_By>;
+  variance?: Maybe<Submits_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "submits" */
@@ -1527,13 +1560,28 @@ export type Submits_Arr_Rel_Insert_Input = {
   on_conflict?: Maybe<Submits_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Submits_Avg_Fields = {
+  __typename?: 'submits_avg_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "submits" */
+export type Submits_Avg_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "submits". All fields are combined with a logical 'AND'. */
 export type Submits_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Submits_Bool_Exp>>>;
   _not?: Maybe<Submits_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Submits_Bool_Exp>>>;
   action?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
+  cipher_number?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  payload?: Maybe<String_Comparison_Exp>;
   team?: Maybe<Teams_Bool_Exp>;
   team_id?: Maybe<String_Comparison_Exp>;
   timestamp?: Maybe<Timestamptz_Comparison_Exp>;
@@ -1545,10 +1593,18 @@ export enum Submits_Constraint {
   SubmitsPkey = 'submits_pkey'
 }
 
+/** input type for incrementing integer column in table "submits" */
+export type Submits_Inc_Input = {
+  cipher_number?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "submits" */
 export type Submits_Insert_Input = {
   action?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
+  cipher_number?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  payload?: Maybe<Scalars['String']>;
   team?: Maybe<Teams_Obj_Rel_Insert_Input>;
   team_id?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['timestamptz']>;
@@ -1558,7 +1614,9 @@ export type Submits_Insert_Input = {
 export type Submits_Max_Fields = {
   __typename?: 'submits_max_fields';
   action?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
+  cipher_number?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  payload?: Maybe<Scalars['String']>;
   team_id?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['timestamptz']>;
 };
@@ -1566,7 +1624,9 @@ export type Submits_Max_Fields = {
 /** order by max() on columns of table "submits" */
 export type Submits_Max_Order_By = {
   action?: Maybe<Order_By>;
+  cipher_number?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  payload?: Maybe<Order_By>;
   team_id?: Maybe<Order_By>;
   timestamp?: Maybe<Order_By>;
 };
@@ -1575,7 +1635,9 @@ export type Submits_Max_Order_By = {
 export type Submits_Min_Fields = {
   __typename?: 'submits_min_fields';
   action?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
+  cipher_number?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  payload?: Maybe<Scalars['String']>;
   team_id?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['timestamptz']>;
 };
@@ -1583,7 +1645,9 @@ export type Submits_Min_Fields = {
 /** order by min() on columns of table "submits" */
 export type Submits_Min_Order_By = {
   action?: Maybe<Order_By>;
+  cipher_number?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  payload?: Maybe<Order_By>;
   team_id?: Maybe<Order_By>;
   timestamp?: Maybe<Order_By>;
 };
@@ -1613,7 +1677,9 @@ export type Submits_On_Conflict = {
 /** ordering options when selecting data from "submits" */
 export type Submits_Order_By = {
   action?: Maybe<Order_By>;
+  cipher_number?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  payload?: Maybe<Order_By>;
   team?: Maybe<Teams_Order_By>;
   team_id?: Maybe<Order_By>;
   timestamp?: Maybe<Order_By>;
@@ -1621,7 +1687,7 @@ export type Submits_Order_By = {
 
 /** primary key columns input for table: "submits" */
 export type Submits_Pk_Columns_Input = {
-  id: Scalars['uuid'];
+  id: Scalars['Int'];
 };
 
 /** select columns of table "submits" */
@@ -1629,7 +1695,11 @@ export enum Submits_Select_Column {
   /** column name */
   Action = 'action',
   /** column name */
+  CipherNumber = 'cipher_number',
+  /** column name */
   Id = 'id',
+  /** column name */
+  Payload = 'payload',
   /** column name */
   TeamId = 'team_id',
   /** column name */
@@ -1639,9 +1709,63 @@ export enum Submits_Select_Column {
 /** input type for updating data in table "submits" */
 export type Submits_Set_Input = {
   action?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['uuid']>;
+  cipher_number?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  payload?: Maybe<Scalars['String']>;
   team_id?: Maybe<Scalars['String']>;
   timestamp?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Submits_Stddev_Fields = {
+  __typename?: 'submits_stddev_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "submits" */
+export type Submits_Stddev_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Submits_Stddev_Pop_Fields = {
+  __typename?: 'submits_stddev_pop_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "submits" */
+export type Submits_Stddev_Pop_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Submits_Stddev_Samp_Fields = {
+  __typename?: 'submits_stddev_samp_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "submits" */
+export type Submits_Stddev_Samp_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Submits_Sum_Fields = {
+  __typename?: 'submits_sum_fields';
+  cipher_number?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "submits" */
+export type Submits_Sum_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
 };
 
 /** update columns of table "submits" */
@@ -1649,12 +1773,55 @@ export enum Submits_Update_Column {
   /** column name */
   Action = 'action',
   /** column name */
+  CipherNumber = 'cipher_number',
+  /** column name */
   Id = 'id',
+  /** column name */
+  Payload = 'payload',
   /** column name */
   TeamId = 'team_id',
   /** column name */
   Timestamp = 'timestamp'
 }
+
+/** aggregate var_pop on columns */
+export type Submits_Var_Pop_Fields = {
+  __typename?: 'submits_var_pop_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "submits" */
+export type Submits_Var_Pop_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Submits_Var_Samp_Fields = {
+  __typename?: 'submits_var_samp_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "submits" */
+export type Submits_Var_Samp_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Submits_Variance_Fields = {
+  __typename?: 'submits_variance_fields';
+  cipher_number?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "submits" */
+export type Submits_Variance_Order_By = {
+  cipher_number?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
 
 /** subscription root */
 export type Subscription_Root = {
@@ -1794,7 +1961,7 @@ export type Subscription_RootSubmits_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootSubmits_By_PkArgs = {
-  id: Scalars['uuid'];
+  id: Scalars['Int'];
 };
 
 
@@ -2325,8 +2492,10 @@ export type Teams_Status = {
   /** An object relationship */
   cipher: Ciphers;
   current_cipher_code?: Maybe<Scalars['String']>;
+  current_cipher_coordinates?: Maybe<Scalars['String']>;
   current_cipher_number: Scalars['Int'];
   hint_text?: Maybe<Scalars['String']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
   next_cipher_coordinates?: Maybe<Scalars['String']>;
   next_hint_time?: Maybe<Scalars['String']>;
   next_solution_time?: Maybe<Scalars['String']>;
@@ -2391,11 +2560,13 @@ export type Teams_Status_Arr_Rel_Insert_Input = {
 export type Teams_Status_Avg_Fields = {
   __typename?: 'teams_status_avg_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "teams_status" */
 export type Teams_Status_Avg_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "teams_status". All fields are combined with a logical 'AND'. */
@@ -2405,8 +2576,10 @@ export type Teams_Status_Bool_Exp = {
   _or?: Maybe<Array<Maybe<Teams_Status_Bool_Exp>>>;
   cipher?: Maybe<Ciphers_Bool_Exp>;
   current_cipher_code?: Maybe<String_Comparison_Exp>;
+  current_cipher_coordinates?: Maybe<String_Comparison_Exp>;
   current_cipher_number?: Maybe<Int_Comparison_Exp>;
   hint_text?: Maybe<String_Comparison_Exp>;
+  last_solved_cipher_number?: Maybe<Int_Comparison_Exp>;
   next_cipher_coordinates?: Maybe<String_Comparison_Exp>;
   next_hint_time?: Maybe<String_Comparison_Exp>;
   next_solution_time?: Maybe<String_Comparison_Exp>;
@@ -2424,14 +2597,17 @@ export enum Teams_Status_Constraint {
 /** input type for incrementing integer column in table "teams_status" */
 export type Teams_Status_Inc_Input = {
   current_cipher_number?: Maybe<Scalars['Int']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "teams_status" */
 export type Teams_Status_Insert_Input = {
   cipher?: Maybe<Ciphers_Obj_Rel_Insert_Input>;
   current_cipher_code?: Maybe<Scalars['String']>;
+  current_cipher_coordinates?: Maybe<Scalars['String']>;
   current_cipher_number?: Maybe<Scalars['Int']>;
   hint_text?: Maybe<Scalars['String']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
   next_cipher_coordinates?: Maybe<Scalars['String']>;
   next_hint_time?: Maybe<Scalars['String']>;
   next_solution_time?: Maybe<Scalars['String']>;
@@ -2444,8 +2620,10 @@ export type Teams_Status_Insert_Input = {
 export type Teams_Status_Max_Fields = {
   __typename?: 'teams_status_max_fields';
   current_cipher_code?: Maybe<Scalars['String']>;
+  current_cipher_coordinates?: Maybe<Scalars['String']>;
   current_cipher_number?: Maybe<Scalars['Int']>;
   hint_text?: Maybe<Scalars['String']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
   next_cipher_coordinates?: Maybe<Scalars['String']>;
   next_hint_time?: Maybe<Scalars['String']>;
   next_solution_time?: Maybe<Scalars['String']>;
@@ -2456,8 +2634,10 @@ export type Teams_Status_Max_Fields = {
 /** order by max() on columns of table "teams_status" */
 export type Teams_Status_Max_Order_By = {
   current_cipher_code?: Maybe<Order_By>;
+  current_cipher_coordinates?: Maybe<Order_By>;
   current_cipher_number?: Maybe<Order_By>;
   hint_text?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
   next_cipher_coordinates?: Maybe<Order_By>;
   next_hint_time?: Maybe<Order_By>;
   next_solution_time?: Maybe<Order_By>;
@@ -2469,8 +2649,10 @@ export type Teams_Status_Max_Order_By = {
 export type Teams_Status_Min_Fields = {
   __typename?: 'teams_status_min_fields';
   current_cipher_code?: Maybe<Scalars['String']>;
+  current_cipher_coordinates?: Maybe<Scalars['String']>;
   current_cipher_number?: Maybe<Scalars['Int']>;
   hint_text?: Maybe<Scalars['String']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
   next_cipher_coordinates?: Maybe<Scalars['String']>;
   next_hint_time?: Maybe<Scalars['String']>;
   next_solution_time?: Maybe<Scalars['String']>;
@@ -2481,8 +2663,10 @@ export type Teams_Status_Min_Fields = {
 /** order by min() on columns of table "teams_status" */
 export type Teams_Status_Min_Order_By = {
   current_cipher_code?: Maybe<Order_By>;
+  current_cipher_coordinates?: Maybe<Order_By>;
   current_cipher_number?: Maybe<Order_By>;
   hint_text?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
   next_cipher_coordinates?: Maybe<Order_By>;
   next_hint_time?: Maybe<Order_By>;
   next_solution_time?: Maybe<Order_By>;
@@ -2516,8 +2700,10 @@ export type Teams_Status_On_Conflict = {
 export type Teams_Status_Order_By = {
   cipher?: Maybe<Ciphers_Order_By>;
   current_cipher_code?: Maybe<Order_By>;
+  current_cipher_coordinates?: Maybe<Order_By>;
   current_cipher_number?: Maybe<Order_By>;
   hint_text?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
   next_cipher_coordinates?: Maybe<Order_By>;
   next_hint_time?: Maybe<Order_By>;
   next_solution_time?: Maybe<Order_By>;
@@ -2536,9 +2722,13 @@ export enum Teams_Status_Select_Column {
   /** column name */
   CurrentCipherCode = 'current_cipher_code',
   /** column name */
+  CurrentCipherCoordinates = 'current_cipher_coordinates',
+  /** column name */
   CurrentCipherNumber = 'current_cipher_number',
   /** column name */
   HintText = 'hint_text',
+  /** column name */
+  LastSolvedCipherNumber = 'last_solved_cipher_number',
   /** column name */
   NextCipherCoordinates = 'next_cipher_coordinates',
   /** column name */
@@ -2554,8 +2744,10 @@ export enum Teams_Status_Select_Column {
 /** input type for updating data in table "teams_status" */
 export type Teams_Status_Set_Input = {
   current_cipher_code?: Maybe<Scalars['String']>;
+  current_cipher_coordinates?: Maybe<Scalars['String']>;
   current_cipher_number?: Maybe<Scalars['Int']>;
   hint_text?: Maybe<Scalars['String']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
   next_cipher_coordinates?: Maybe<Scalars['String']>;
   next_hint_time?: Maybe<Scalars['String']>;
   next_solution_time?: Maybe<Scalars['String']>;
@@ -2567,44 +2759,52 @@ export type Teams_Status_Set_Input = {
 export type Teams_Status_Stddev_Fields = {
   __typename?: 'teams_status_stddev_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "teams_status" */
 export type Teams_Status_Stddev_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Teams_Status_Stddev_Pop_Fields = {
   __typename?: 'teams_status_stddev_pop_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "teams_status" */
 export type Teams_Status_Stddev_Pop_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Teams_Status_Stddev_Samp_Fields = {
   __typename?: 'teams_status_stddev_samp_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "teams_status" */
 export type Teams_Status_Stddev_Samp_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** aggregate sum on columns */
 export type Teams_Status_Sum_Fields = {
   __typename?: 'teams_status_sum_fields';
   current_cipher_number?: Maybe<Scalars['Int']>;
+  last_solved_cipher_number?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "teams_status" */
 export type Teams_Status_Sum_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** update columns of table "teams_status" */
@@ -2612,9 +2812,13 @@ export enum Teams_Status_Update_Column {
   /** column name */
   CurrentCipherCode = 'current_cipher_code',
   /** column name */
+  CurrentCipherCoordinates = 'current_cipher_coordinates',
+  /** column name */
   CurrentCipherNumber = 'current_cipher_number',
   /** column name */
   HintText = 'hint_text',
+  /** column name */
+  LastSolvedCipherNumber = 'last_solved_cipher_number',
   /** column name */
   NextCipherCoordinates = 'next_cipher_coordinates',
   /** column name */
@@ -2631,33 +2835,39 @@ export enum Teams_Status_Update_Column {
 export type Teams_Status_Var_Pop_Fields = {
   __typename?: 'teams_status_var_pop_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "teams_status" */
 export type Teams_Status_Var_Pop_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Teams_Status_Var_Samp_Fields = {
   __typename?: 'teams_status_var_samp_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "teams_status" */
 export type Teams_Status_Var_Samp_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Teams_Status_Variance_Fields = {
   __typename?: 'teams_status_variance_fields';
   current_cipher_number?: Maybe<Scalars['Float']>;
+  last_solved_cipher_number?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "teams_status" */
 export type Teams_Status_Variance_Order_By = {
   current_cipher_number?: Maybe<Order_By>;
+  last_solved_cipher_number?: Maybe<Order_By>;
 };
 
 /** update columns of table "teams" */
@@ -2822,6 +3032,20 @@ export type GetMyTeamStatusQuery = (
       & Pick<Teams_Status, 'solution_text' | 'next_solution_time' | 'next_hint_time' | 'next_cipher_coordinates' | 'hint_text' | 'current_cipher_number' | 'current_cipher_code'>
     )> }
   )> }
+);
+
+export type GetCiphersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCiphersQuery = (
+  { __typename?: 'query_root' }
+  & { ciphers_aggregate: (
+    { __typename?: 'ciphers_aggregate' }
+    & { nodes: Array<(
+      { __typename?: 'ciphers' }
+      & Pick<Ciphers, 'cipher_code' | 'cipher_number' | 'url' | 'hint_text' | 'solution_text'>
+    )> }
+  ) }
 );
 
 
@@ -3137,3 +3361,41 @@ export function useGetMyTeamStatusLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type GetMyTeamStatusQueryHookResult = ReturnType<typeof useGetMyTeamStatusQuery>;
 export type GetMyTeamStatusLazyQueryHookResult = ReturnType<typeof useGetMyTeamStatusLazyQuery>;
 export type GetMyTeamStatusQueryResult = ApolloReactCommon.QueryResult<GetMyTeamStatusQuery, GetMyTeamStatusQueryVariables>;
+export const GetCiphersDocument = gql`
+    query getCiphers {
+  ciphers_aggregate(order_by: {cipher_number: asc}, where: {cipher_number: {_neq: 0}}) {
+    nodes {
+      cipher_code
+      cipher_number
+      url
+      hint_text
+      solution_text
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCiphersQuery__
+ *
+ * To run a query within a React component, call `useGetCiphersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCiphersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCiphersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCiphersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCiphersQuery, GetCiphersQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCiphersQuery, GetCiphersQueryVariables>(GetCiphersDocument, baseOptions);
+      }
+export function useGetCiphersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCiphersQuery, GetCiphersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCiphersQuery, GetCiphersQueryVariables>(GetCiphersDocument, baseOptions);
+        }
+export type GetCiphersQueryHookResult = ReturnType<typeof useGetCiphersQuery>;
+export type GetCiphersLazyQueryHookResult = ReturnType<typeof useGetCiphersLazyQuery>;
+export type GetCiphersQueryResult = ApolloReactCommon.QueryResult<GetCiphersQuery, GetCiphersQueryVariables>;

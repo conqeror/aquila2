@@ -9,6 +9,7 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "./apolloClient";
 import { Login } from "./components/Login/Login";
 import { MyTeam } from "./components/MyTeam/MyTeam";
+import { After } from "./components/After/After";
 import useLocalStorage from "@rehooks/local-storage";
 import { Game } from "./components/Game/Game";
 
@@ -20,9 +21,11 @@ const allTabs = [
   "/login",
   "/team",
   "/game",
+  "/after",
 ];
 
 const REGISTRATION_ENABLED = false;
+const GAME_ENABLED = false;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -90,7 +93,7 @@ const App: React.FC = () => {
                       to={allTabs[5]}
                     />
                   )}
-                  {token && (
+                  {token && GAME_ENABLED && (
                     <Tab
                       label="Hra"
                       value="/game"
@@ -98,6 +101,12 @@ const App: React.FC = () => {
                       to={allTabs[6]}
                     />
                   )}
+                  <Tab
+                    label="Po hre"
+                    value="/after"
+                    component={Link}
+                    to={allTabs[7]}
+                  />
                 </Tabs>
               </AppBar>
               <Switch>
@@ -107,6 +116,7 @@ const App: React.FC = () => {
                 <Route path={allTabs[4]} render={() => <Login />} />
                 <Route path={allTabs[5]} render={() => <MyTeam />} />
                 <Route path={allTabs[6]} render={() => <Game />} />
+                <Route path={allTabs[7]} render={() => <After />} />
                 <Route path={allTabs[0]} render={() => <Home />} />
               </Switch>
             </div>
