@@ -37,3 +37,15 @@ query getMyTeamStatus {
     name
   }
 }
+
+query getCiphers {
+  ciphers_aggregate(order_by: {cipher_number: asc}, where: {cipher_number: {_neq: 0}}) {
+    nodes {
+     cipher_code
+    	cipher_number
+    	url
+    	hint_text
+    	solution_text 
+    }
+  }
+}
