@@ -56,7 +56,7 @@ export const After: React.FC = () => {
         <iframe
           width={1000}
           height={600}
-          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRqNyDe11T2CsRLJoLnAdpR7rjh0dovOzpaJdNoHn7UMVcVLtg_2Gi2MkY-F6X94g/pubhtml?gid=800460217&amp;single=true&amp;widget=true&amp;headers=false"
+          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRqNyDe11T2CsRLJoLnAdpR7rjh0dovOzpaJdNoHn7UMVcVLtg_2Gi2MkY-F6X94g/pubhtml?gid=1981220429&amp;single=true&amp;widget=true&amp;headers=false"
         ></iframe>
         <Typography variant="h2" gutterBottom align="center">
           Šifry
